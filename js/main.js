@@ -1,76 +1,60 @@
-//comentario en linea
-/*
-comentario en bloque
-*/
+//Variables
+const saldoInicial = 1000;
+let saldo = saldoInicial;
+let opcion;
 
-//console.log
-//console.log("Chau Mundo");
+//Bucle principal del cajero
+do {
+    opcion = parseInt(prompt("== Cajero Automático==\n" +
+        "saldo actual: $" + saldo + "\n" +
+        "1. Consultar saldo\n" +
+        "2. Retirar dinero\n" +
+        "3. depositar dinero\n" +
+        "4. Salir\n" +
+        "Ingrese el número de la opción deseada:"));
 
-/*
-tipos de datos
-string =cadena de texto
-number =numero
-boolean =verdadero o falso
-*/
+//Switch para manejar las opciones del cajero
+switch (opcion) {
+    case 1:
+        console.log("Su saldo es: $" + saldo);
+        alert("Su saldo actual es: $" + saldo);
+        break;
+    case 2:
+        let retiro = parseFloat(prompt("Ingrese la cantidad a retirar:"));
 
-/* string "cadena de texto"
-let nombre = "Juan";
-console.log(nombre); 
+        if (isNaN(retiro) || retiro <= 0) {
+            alert("Monto inválido. Por favor, ingrese un número mayor a 0.");
+        }
+        else if (retiro > saldo) {
+            console.log("Saldo insuficiente para retirar $" + retiro);
+            alert("Saldo insuficiente. Su saldo actual es: $" + saldo);
+        }
+        else {
+            saldo -= retiro;
+            console.log("Retiro exitoso. Su nuevo saldo es: $" + saldo);
+            alert("Retiro exitoso. Su nuevo saldo es: $" + saldo);
+        }
+        break;
+    case 3: 
+        let deposito = parseFloat(prompt("ingrese la cantidad a depositar:"));
 
-// number = numero
-let edad = 30;
-console.log(edad);
+        if (isNaN(deposito) || deposito <= 0) {
+            console.log("Monto inválido. Por favor, ingrese un número mayor a 0.");
+            alert("Monto inválido. Por favor, ingrese un número mayor a 0.");
+        } 
+        else {
+            saldo += deposito;
+            console.log("Depósito exitoso. Su nuevo saldo es: $" + saldo);
+            alert("Depósito exitoso. Su nuevo saldo es: $" + saldo);
+        }
+        break;
+    case 4:
+        console.log("Gracias por usar el cajero automático. ¡Hasta luego!");
+        alert("Gracias por usar el cajero automático. ¡Hasta luego!");
+        break;
+    default:
+        console.log("Opción inválida. Por favor, ingrese un número del 1 al 4.");
+        alert("Opción inválida. Por favor, ingrese un número del 1 al 4.");
+    }
+}while (opcion !== 4);
 
-// boolean = verdadero o falso
-let esEstudiante = true;
-console.log(esEstudiante);
-*/
-
-// Variables: espacio de memoria que almacena un valor
-
-// declarar variable
-// let = variable local 
-// const = constante
-// var = variable global (no se usa mucho)
-
-// inicializar variable
-// let edad = 30;
-// const miEdad = 24;
-
-//const palabra reservada = palabra que tiene un solo significado en JS
-
-
-// console.log nos permite salida de informacion en la consola del navegador
-
-// otra es alert 
-// alert("no lo uses mucho que es feo!");
-
-// otra es prompt 
-// para ingresar datos por teclado
-//const nombre = prompt("Ingrese su nombre");
-//console.log(nombre);
-
-// confirm nos permite mostrar un mensaje de confirmacion
-//let respuesta = confirm("¿Desea continuar?");
-//console.log(respuesta);
-
-//const numero1 = prompt ("Ingrese un numero");
-//const numero2 = prompt ("Ingrese otro numero");
-
-
-// Tarea 
-
-//1 - parseInt o parseFloat
-
-//2 - solicitar al nombre y apellido y mostrarlo en un mensaje final de este estilo para el caso del profe. "hola, tu nombre es lucas y tu apellido es ruiz"
-
-//primer ejecicio
-const numero1 = parseInt(prompt("Ingrese un numero"));
-const numero2 = parseInt(prompt("Ingrese otro numero"));
-
-alert("El resultado de la suma es: " + (numero1 + numero2));
-
-//segundo ejercicio
-const nombre = prompt("Ingrese su nombre");
-const apellido = prompt("Ingrese su apellido");
-alert("Hola, tu nombre es " + nombre + " y tu apellido es " + apellido);
