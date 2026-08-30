@@ -23,6 +23,7 @@ switch (opcion) {
         let retiro = parseFloat(prompt("Ingrese la cantidad a retirar:"));
 
         if (isNaN(retiro) || retiro <= 0) {
+            console.log("Monto inválido. Por favor, ingrese un número mayor a 0.");
             alert("Monto inválido. Por favor, ingrese un número mayor a 0.");
         }
         else if (retiro > saldo) {
