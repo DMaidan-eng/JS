@@ -1,61 +1,78 @@
-//Variables
-const saldoInicial = 1000;
-let saldo = saldoInicial;
+// Simulador Cajero Automático 
+const SALDO_INICIAL = 1000;
+let saldo = SALDO_INICIAL;
 let opcion;
 
-//Bucle principal del cajero
+// Arrow: valida monto > 0 y que sea número
+const validarMonto = (monto) => !isNaN(monto) && monto > 0;
+
+// Retorna nuevo saldo o null si no alcanza
+function procesarRetiro(saldoActual, monto) {
+    if (monto > saldoActual) return null;
+    return saldoActual - monto;
+}
+
+// Retorna nuevo saldo (siempre válido si pasó validarMonto)
+function procesarDeposito(saldoActual, monto) {
+    return saldoActual + monto;
+}
+
+// Centraliza salida: console.log + alert
+function mostrarResultado(mensaje, esError = false) {
+    const prefijo = esError ? "❌ " : "✅ ";
+    console.log(prefijo + mensaje);
+    alert(mensaje);
+}
+
+// --- Bucle principal ---
 do {
-    opcion = parseInt(prompt("== Cajero Automático==\n" +
-        "saldo actual: $" + saldo + "\n" +
+    opcion = parseInt(prompt(
+        "=== CAJERO AUTOMÁTICO ===\n" +
+        `Saldo actual: $${saldo}\n\n` +
         "1. Consultar saldo\n" +
-        "2. Retirar dinero\n" +
-        "3. depositar dinero\n" +
-        "4. Salir\n" +
-        "Ingrese el número de la opción deseada:"));
+        "2. Retirar efectivo\n" +
+        "3. Depositar dinero\n" +
+        "4. Salir\n\n" +
+        "Ingrese opción (1-4):"
+    ));
 
-//Switch para manejar las opciones del cajero
-switch (opcion) {
-    case 1:
-        console.log("Su saldo es: $" + saldo);
-        alert("Su saldo actual es: $" + saldo);
-        break;
-    case 2:
-        let retiro = parseFloat(prompt("Ingrese la cantidad a retirar:"));
+    switch (opcion) {
+        case 1:
+            mostrarResultado(`Saldo actual: $${saldo}`);
+            break;
 
-        if (isNaN(retiro) || retiro <= 0) {
-            console.log("Monto inválido. Por favor, ingrese un número mayor a 0.");
-            alert("Monto inválido. Por favor, ingrese un número mayor a 0.");
+        case 2: {
+            const monto = parseFloat(prompt("Monto a retirar:"));
+            if (!validarMonto(monto)) {
+                mostrarResultado("Monto inválido. Debe ser número mayor a 0.", true);
+            } else {
+                const nuevoSaldo = procesarRetiro(saldo, monto);
+                if (nuevoSaldo === null) {
+                    mostrarResultado(`Saldo insuficiente. Disponible: $${saldo}`, true);
+                } else {
+                    saldo = nuevoSaldo;
+                    mostrarResultado(`Retiro exitoso. Nuevo saldo: $${saldo}`);
+                }
+            }
+            break;
         }
-        else if (retiro > saldo) {
-            console.log("Saldo insuficiente para retirar $" + retiro);
-            alert("Saldo insuficiente. Su saldo actual es: $" + saldo);
-        }
-        else {
-            saldo -= retiro;
-            console.log("Retiro exitoso. Su nuevo saldo es: $" + saldo);
-            alert("Retiro exitoso. Su nuevo saldo es: $" + saldo);
-        }
-        break;
-    case 3: 
-        let deposito = parseFloat(prompt("ingrese la cantidad a depositar:"));
 
-        if (isNaN(deposito) || deposito <= 0) {
-            console.log("Monto inválido. Por favor, ingrese un número mayor a 0.");
-            alert("Monto inválido. Por favor, ingrese un número mayor a 0.");
-        } 
-        else {
-            saldo += deposito;
-            console.log("Depósito exitoso. Su nuevo saldo es: $" + saldo);
-            alert("Depósito exitoso. Su nuevo saldo es: $" + saldo);
+        case 3: {
+            const monto = parseFloat(prompt("Monto a depositar:"));
+            if (!validarMonto(monto)) {
+                mostrarResultado("Monto inválido. Debe ser número mayor a 0.", true);
+            } else {
+                saldo = procesarDeposito(saldo, monto);
+                mostrarResultado(`Depósito exitoso. Nuevo saldo: $${saldo}`);
+            }
+            break;
         }
-        break;
-    case 4:
-        console.log("Gracias por usar el cajero automático. ¡Hasta luego!");
-        alert("Gracias por usar el cajero automático. ¡Hasta luego!");
-        break;
-    default:
-        console.log("Opción inválida. Por favor, ingrese un número del 1 al 4.");
-        alert("Opción inválida. Por favor, ingrese un número del 1 al 4.");
+
+        case 4:
+            mostrarResultado("Gracias por usar el cajero automático. ¡Hasta luego!");
+            break;
+
+        default:
+            mostrarResultado("Opción inválida. Ingrese 1, 2, 3 o 4.", true);
     }
-}while (opcion !== 4);
-
+} while (opcion !== 4);
