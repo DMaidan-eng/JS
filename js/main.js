@@ -30,6 +30,39 @@ function depositarDinero(saldoActual, montoDeposito) {
     return saldoActual;
 }
 
+// Array 
+const montosTransacciones = ["100", "200", "500", "2000", "5000"];
+
+montosTransacciones.push("10000");
+montosTransacciones.unshift("50");
+
+const primeraTransferencia = montosTransacciones.shift();
+console.log ("Se agrego el elemento: " + (primeraTransferencia))
+
+const montosAltos = montosTransacciones.pop();
+console.log ("Se elimino el elemento: " + (montosAltos));
+
+const buscarMonto = prompt("Ingrese un monto a buscar en las transacciones:");
+
+if (montosTransacciones.includes(buscarMonto)) {
+    const posicion = montosTransacciones.indexOf(buscarMonto);
+    console.log (`La transferencia de $${buscarMonto} esta en la posicion ${posicion}`);
+} else {
+    console.log (`Transferencia por ${buscarMonto} no existe`); 
+}
+
+montosTransacciones.splice(3, 1, "7000" );
+
+function transferenciasHechas (lista) {
+    console.log("--Transferencias actuales--");
+    for (const monto of lista) {
+        console.log (`Transferencia de $${monto}`);
+    }
+    console.log (`Total de ${lista.length} Transferencias`);
+}
+
+transferenciasHechas(montosTransacciones)
+
 // Menú principal
 do {
     opcion = parseInt(prompt("== Cajero Automático==\n" +
